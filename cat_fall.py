@@ -69,14 +69,16 @@ class Player:
             return 0
 
         score = 0
-        if pyxel.btnp(pyxel.KEY_LEFT):
+        if pyxel.btnp(pyxel.KEY_LEFT) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
             self.x = max(MARGIN, self.x - CELL_SIZE)
             self.direction = LEFT
             self.wait_count = 0
             self.wait += 1
             score = 1
 
-        if pyxel.btnp(pyxel.KEY_RIGHT):
+        if pyxel.btnp(pyxel.KEY_RIGHT) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
             if self.x < 0:
                 # 最初の一歩
                 self.x = MARGIN
@@ -175,12 +177,14 @@ class App:
         '''
         if self.game_satate == GamePlay.Title:
             # ゲームスタート
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if pyxel.btnp(pyxel.KEY_SPACE) \
+                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.Play:
             # 一時停止
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if pyxel.btnp(pyxel.KEY_SPACE) \
+                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
                 self.game_satate = GamePlay.Pose
                 return
 
@@ -246,7 +250,8 @@ class App:
 
         elif self.game_satate == GamePlay.Pose:
             # 一時停止解除
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if pyxel.btnp(pyxel.KEY_SPACE) \
+                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.GameOverPre:
@@ -257,7 +262,8 @@ class App:
                 self.game_satate = GamePlay.GameOver
 
         elif self.game_satate == GamePlay.GameOver:
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if pyxel.btnp(pyxel.KEY_SPACE) \
+                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
                 self.enemies.clear()
                 self.score = 0
                 self.player.x = START_POS
