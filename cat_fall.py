@@ -301,9 +301,9 @@ class App:
         # スコアボード固定表示
         self.DrawScoreBoard()
 
-        if self.right_door is False:
-            self.DrawMsgCenter(f'{self.door_wait}, {self.door_wait_count}', 0,
-                               pyxel.COLOR_BLACK)
+        # if self.right_door is False:
+        #    self.DrawMsgCenter(f'{self.door_wait}, {self.door_wait_count}', 0,
+        #                       pyxel.COLOR_BLACK)
 
     def DrawMsgCenter(self, msg: str, y_offset: float, col: int = None):
         '''
