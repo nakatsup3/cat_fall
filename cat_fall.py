@@ -26,6 +26,8 @@ GRID_COL = int(WINDOW_WIDTH / CELL_SIZE) - 1
 ONE_PLAY_SCORE = 10
 # プレイヤー開始位置
 START_POS = int(CELL_SIZE / 2) * -1
+# プレイヤーの疲れMAX値
+PLAYER_WAIT_MAX = 9999
 
 # 落下時の停止間隔
 DRAW_INTERVAL = 45
@@ -71,16 +73,14 @@ class Player:
             return 0
 
         score = 0
-        if pyxel.btnp(pyxel.KEY_LEFT) \
-                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
+        if self.PressLeft():
             self.x = max(MARGIN, self.x - CELL_SIZE)
             self.direction = LEFT
             self.wait_count = 0
-            self.wait = min(9999, self.wait + 1)
+            self.wait = min(PLAYER_WAIT_MAX, self.wait + 1)
             score = 1
 
-        if pyxel.btnp(pyxel.KEY_RIGHT) \
-                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
+        if self.PressRight():
             if self.x < 0:
                 # 最初の一歩
                 self.x = MARGIN
@@ -89,15 +89,14 @@ class Player:
             self.direction = RIGHT
             # ドア当たり判定
             door = pyxel.width - MARGIN - CELL_SIZE
-            if is_open is False and \
-                    door <= self.x:
+            if is_open is False and door <= self.x:
                 # 当たっている
                 self.x = door
             else:
                 # 当たってない
                 self.wait_count = 0
                 score = 1
-                self.wait = min(9999, self.wait + 1)
+                self.wait = min(PLAYER_WAIT_MAX, self.wait + 1)
 
         # 右端到達ポイント判定
         if pyxel.width <= self.x:
@@ -105,8 +104,29 @@ class Player:
         return score
 
     def ResetPos(self):
+        '''
+        プレイヤーリセット
+        '''
         self.wait = 0
         self.x = START_POS
+
+    def PressLeft(self):
+        '''
+        操作 左
+        '''
+        if pyxel.btnp(pyxel.KEY_LEFT) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_LEFT):
+            return True
+        return False
+    
+    def PressRight(self):
+        '''
+        操作 右
+        '''
+        if pyxel.btnp(pyxel.KEY_RIGHT) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
+            return True
+        return False
 
 class Enemy:
     def __init__(self, x, y, speed, type):
@@ -270,7 +290,7 @@ class App:
                     or self.GamePadPushAnyKey():
                 self.enemies.clear()
                 self.score = 0
-                self.player.x = START_POS
+                self.player.ResetPos()
                 self.ufo.x = MARGIN
                 self.game_satate = GamePlay.Title
 
