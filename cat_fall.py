@@ -67,7 +67,7 @@ class Player:
             return 0
 
         # だんだん足が重くなる 
-        self.wait_count += 5
+        self.wait_count += 2
         wait = int(self.wait / 10) * 10
         if self.wait_count < wait:
             return 0
