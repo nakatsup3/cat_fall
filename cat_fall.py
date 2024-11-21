@@ -63,9 +63,11 @@ class Player:
         if game_play is not GamePlay.Play:
             # プレイ中以外は操作しない
             return 0
+
+        # だんだん足が重くなる 
         self.wait_count += 5
-        # だんだん足が重くなる
-        if self.wait_count < self.wait:
+        wait = int(self.wait / 10) * 10
+        if self.wait_count < wait:
             return 0
 
         score = 0
@@ -74,7 +76,7 @@ class Player:
             self.x = max(MARGIN, self.x - CELL_SIZE)
             self.direction = LEFT
             self.wait_count = 0
-            self.wait += 1
+            self.wait = min(9999, self.wait + 1)
             score = 1
 
         if pyxel.btnp(pyxel.KEY_RIGHT) \
@@ -95,14 +97,16 @@ class Player:
                 # 当たってない
                 self.wait_count = 0
                 score = 1
-                self.wait += 1
+                self.wait = min(9999, self.wait + 1)
 
         # 右端到達ポイント判定
         if pyxel.width <= self.x:
-            self.wait = 0
             return ONE_PLAY_SCORE
         return score
 
+    def ResetPos(self):
+        self.wait = 0
+        self.x = START_POS
 
 class Enemy:
     def __init__(self, x, y, speed, type):
@@ -243,9 +247,9 @@ class App:
             # 得点増加演出
             self.score_count += 1
             if ONE_PLAY_SCORE < self.score_count:
-                self.player.x = START_POS
-                self.score += ONE_PLAY_SCORE
+                self.score += ONE_PLAY_SCORE * int(self.player.wait / 10)
                 self.score_count = 0
+                self.player.ResetPos()
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.Pose:
@@ -268,7 +272,7 @@ class App:
                 self.score = 0
                 self.player.x = START_POS
                 self.ufo.x = MARGIN
-                self.game_satate = GamePlay.Play
+                self.game_satate = GamePlay.Title
 
     def draw(self):
         '''
@@ -281,6 +285,10 @@ class App:
             self.DrawPlayer()
             self.DrawEnemy()
 
+        if self.game_satate == GamePlay.Title:
+            self.DrawMsgCenter('Press the button to start playing',
+                               pyxel.height / 2, pyxel.COLOR_BLACK)
+            
         if self.game_satate == GamePlay.Pose:
             # ポーズ　画面を黒の半透明で覆う
             pyxel.dither(0.5)
@@ -325,7 +333,7 @@ class App:
         '''
         if col is None:
             col = pyxel.COLOR_BLACK
-        x = pyxel.width / 2 - len(msg) * 8 / 2
+        x = pyxel.width / 2 - self.fnt_jp_10.text_width(msg) / 2
         pyxel.text(x, y_offset, msg, col=col, font=self.fnt_jp_10)
 
     def DrawBackground(self):
@@ -400,7 +408,14 @@ class App:
         pyxel.text(3, y, f'score:{score:04}',
                    pyxel.COLOR_WHITE, self.fnt_jp_10)
         # タイトル
-        self.DrawMsgCenter('helmet', y, pyxel.COLOR_WHITE)
+        self.DrawMsgCenter('cat fall', y, pyxel.COLOR_WHITE)
+
+        # 疲れ
+        fatigue = int(self.player.wait / 10)
+        msg = f'fatigue:{fatigue:03}'
+        msg_width = self.fnt_jp_10.text_width(msg)
+        pyxel.text(pyxel.width - (msg_width + 3), y, msg,
+                   pyxel.COLOR_WHITE, self.fnt_jp_10)
 
     def DrawPlayer(self):
         '''
