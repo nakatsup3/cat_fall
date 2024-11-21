@@ -178,13 +178,13 @@ class App:
         if self.game_satate == GamePlay.Title:
             # ゲームスタート
             if pyxel.btnp(pyxel.KEY_SPACE) \
-                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+                    or self.GamePadPushAnyKey():
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.Play:
             # 一時停止
             if pyxel.btnp(pyxel.KEY_SPACE) \
-                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+                    or self.GamePadPushAnyKey():
                 self.game_satate = GamePlay.Pose
                 return
 
@@ -251,7 +251,7 @@ class App:
         elif self.game_satate == GamePlay.Pose:
             # 一時停止解除
             if pyxel.btnp(pyxel.KEY_SPACE) \
-                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+                    or self.GamePadPushAnyKey():
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.GameOverPre:
@@ -263,7 +263,7 @@ class App:
 
         elif self.game_satate == GamePlay.GameOver:
             if pyxel.btnp(pyxel.KEY_SPACE) \
-                    or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+                    or self.GamePadPushAnyKey():
                 self.enemies.clear()
                 self.score = 0
                 self.player.x = START_POS
@@ -304,6 +304,20 @@ class App:
         # if self.right_door is False:
         #    self.DrawMsgCenter(f'{self.door_wait}, {self.door_wait_count}', 0,
         #                       pyxel.COLOR_BLACK)
+
+    def GamePadPushAnyKey(self):
+        '''
+        ゲームパッドいずれかのキーを押す
+        '''
+        if pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+            return True
+        if pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
+            return True
+        if pyxel.btnp(pyxel.GAMEPAD1_BUTTON_X):
+            return True
+        if pyxel.btnp(pyxel.GAMEPAD1_BUTTON_Y):
+            return True
+        return False
 
     def DrawMsgCenter(self, msg: str, y_offset: float, col: int = None):
         '''
