@@ -1,32 +1,53 @@
 <!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="UTF-8">
-    <title>Page Title</title>
-  </head>
-  <body>
-    <h1>ゲーム</h1>
-    <a href="./cat_fall.html">
-      &gt;&gt;&nbsp;cat&nbsp;fall&nbsp;play&nbsp;&lt;&lt;<br/>
-      <img src="./htmlresources/start.png"/>
-    </a>
-    <h2>■あそびかた</h2>
-    <p>ねこを操作して右側の扉に入ろう。</p>
-    <p>降ってくるねこに当たるとGameOver&#33;</p>
-    <br/>
-    <p>1歩ごとに得点が1点入ります。</p>
-    <p>10歩ごとに&nbsp;fatigue&nbsp;が1増えます。</p>
-    <p>fatigue&nbsp;が多いほどねこの足が遅くなります。</p>
-    <p>扉に入ると10点&nbsp;&#43;&nbsp;ボーナス点が入ります。</p>
-    <p>ボーナス点は&nbsp;fatigue&nbsp;の数値が大きいほど多くなります。</p>
-    <br/>
-    <h2>■操作方法</h2>
-    <h3>PCの場合</h3>
-    <p>左右キー&nbsp;&#58;&nbsp;左右移動</p>
-    <p>スペースキー&nbsp;&#58;&nbsp;プレイ開始・ポーズ</p>
-    <br/>
-    <h3>スマホ・タブレットなど</h3>
-    <p>左右キー&nbsp;&#58;&nbsp;左右移動</p>
-    <p>A・B・X・Yボタン&nbsp;&#58;&nbsp;プレイ開始・ポーズ</p>
-  </body>
+<html lang="en">
+<head>
+  <title>Catfall</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="jumbotron text-center">
+  <h1>Cat fall</h1>
+  <p>画像クリックでゲームプレイできます。</p>
+  <a href="./cat_fall.html">
+    <img src="./htmlresources/start.png"/>
+  </a>
+</div>
+  
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h3>あそびかた</h3>
+      <p>ねこを操作して右側の扉に入ろう。</p>
+      <p>降ってくるねこに当たるとGameOver&#33;</p>
+      <br/>
+      <p>1歩ごとに得点が1点入ります。</p>
+      <p>10歩ごとに&nbsp;fatigue&nbsp;が1増えます。</p>
+      <p>fatigue&nbsp;が多いほどねこの足が遅くなります。</p>
+      <p>扉に入ると10点&nbsp;&#43;&nbsp;ボーナス点が入ります。</p>
+      <p>ボーナス点は&nbsp;fatigue&nbsp;の数値が大きいほど多くなります。</p>
+      <br/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>PCの場合</h3>
+      <p>左右キー&nbsp;&#58;&nbsp;左右移動</p>
+      <p>スペースキー&nbsp;&#58;&nbsp;プレイ開始・ポーズ</p>
+      <br/>
+    </div>
+    <div class="col-sm-4">
+      <h3>スマホ・タブレットなど</h3>        
+      <p>左右キー&nbsp;&#58;&nbsp;左右移動</p>
+      <p>A・B・X・Yボタン&nbsp;&#58;&nbsp;プレイ開始・ポーズ</p>
+      <br/>
+    </div>
+  </div>
+</div>
+</body>
 </html>
