@@ -74,19 +74,23 @@ class Player:
 
         score = 0
         if self.PressLeft():
-            self.x = max(MARGIN, self.x - CELL_SIZE)
             self.direction = LEFT
-            self.wait_count = 0
-            self.wait = min(PLAYER_WAIT_MAX, self.wait + 1)
-            score = 1
+            self.x -= CELL_SIZE
+            # ドア当たり判定
+            if self.x < MARGIN:
+                self.x = MARGIN
+            else:
+                score = 1
+                self.wait_count = 0
+                self.wait = min(PLAYER_WAIT_MAX, self.wait + 1)
 
         if self.PressRight():
+            self.direction = RIGHT
             if self.x < 0:
                 # 最初の一歩
                 self.x = MARGIN
             else:
                 self.x += CELL_SIZE
-            self.direction = RIGHT
             # ドア当たり判定
             door = pyxel.width - MARGIN - CELL_SIZE
             if is_open is False and door <= self.x:
