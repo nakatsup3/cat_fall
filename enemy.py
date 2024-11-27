@@ -53,7 +53,7 @@ class Enemy(GameObject):
             if self.type == EnemyType.Hevy:
                 self.Life -= 1
             else:
-                self.y = PLAY_BOTTOM_LINE + self.h
+                self.pos.y = PLAY_BOTTOM_LINE + self.h
 
 
 class EnemyManager:

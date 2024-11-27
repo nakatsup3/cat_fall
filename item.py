@@ -24,11 +24,12 @@ class ItemMagager:
                 or game_state == GamePlay.PlayReset \
                 or game_state == GamePlay.GameOver:
             # アイテム生成
-            cnt = pyxel.rndi(0, 6)
+            cnt = pyxel.rndi(0, 4)
             for i in range(cnt):
                 itm = Item()
                 itm.pos.x = pyxel.rndi(MARGIN, pyxel.width - MARGIN - itm.w)
-                itm.pos.y = PLAY_BOTTOM_LINE - CELL_SIZE - itm.h
+                itm.pos.y = PLAY_BOTTOM_LINE - CELL_SIZE - itm.h \
+                            - pyxel.rndi(5, CELL_SIZE * 2)
                 self.items.append(itm)
 
         if game_state == GamePlay.Play:

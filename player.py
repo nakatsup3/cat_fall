@@ -161,7 +161,7 @@ class Player:
         プレイヤーリセット
         '''
         self.speed = 2
-        self.fatigue = 0
+        self.fatigue = 1
         self.x = START_POS
         self.y = PLAY_BOTTOM_LINE - CELL_SIZE
         self.t = 0

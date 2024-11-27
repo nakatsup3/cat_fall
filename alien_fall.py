@@ -14,6 +14,7 @@ from player import Player
 from enemy import EnemyManager
 from item import ItemMagager
 
+
 # ウインドウ設定
 TITLE = 'AlienFall'
 DOOR_CYCLE = 180
@@ -48,6 +49,7 @@ class App:
         self.door_cyc = DOOR_CYCLE          # ドア閉サイクル
         self.door_close_cnt = 0             # ドア閉時間
         self.ed_ptn = 0
+        self.e_val_a = 0
 
     def update(self):
         '''
@@ -99,7 +101,6 @@ class App:
                 self.score_count = 0
                 self.player.ResetPos()
                 self.items.Reset()
-                self.items.update(self.game_satate)
                 self.game_satate = GamePlay.PlayReset
             if pyxel.btnr(pyxel.KEY_RIGHT):
                 self.button_release = True
@@ -108,6 +109,7 @@ class App:
             # 右キー押しっぱなしだと勢いですぐドアから出るので調整
             if pyxel.btnr(pyxel.KEY_RIGHT) \
                     or self.button_release:
+                self.items.update(self.game_satate)
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.GameOverPre:
@@ -125,6 +127,13 @@ class App:
                 self.score = 0
                 self.items.update(self.game_satate)
                 self.game_satate = GamePlay.Play
+            if self.ed_ptn == 1:
+                self.e_val_a += 1
+                if 60 < self.e_val_a:
+                    # ふよふよ
+                    # self.e_val_a = -60
+                    # 対峙
+                    self.e_val_a = 60
 
     def draw(self):
         '''
@@ -303,8 +312,19 @@ class App:
         ED
         '''
         if self.ed_ptn == 1:
-            pass
+            white = pyxel.COLOR_WHITE
+            # ふよふよ
+            # y = self.fuyofuyo()
+            # pyxel.elli(pyxel.width / 2, y, 10, 10, pyxel.COLOR_WHITE)
+            # 対峙
+            x = self.e_val_a / 2
+            pyxel.rect(x, SCORE_BOARD_LINE - 130, 100, 130, white)
+            pyxel.rect(pyxel.width - x - 100, SCORE_BOARD_LINE - 170, 100, 150, white)
         elif self.ed_ptn == 2:
             pass
+
+    def fuyofuyo(self):
+        return (self.e_val_a * self.e_val_a) / 120 + (pyxel.height / 2)
+
 
 App()
