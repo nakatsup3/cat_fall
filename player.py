@@ -142,7 +142,7 @@ class Player:
         操作 ジャンプ
         '''
         if pyxel.btnr(pyxel.KEY_SPACE) \
-                or pyxel.btn(pyxel.GAMEPAD1_BUTTON_A):
+                or pyxel.btnr(pyxel.GAMEPAD1_BUTTON_A):
             self.jmp_lock = True
             return False
         if pyxel.btn(pyxel.KEY_SPACE) \
