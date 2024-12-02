@@ -56,13 +56,13 @@ class App:
         データ更新
         '''
         if self.game_satate == GamePlay.Title:
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if self.InputMainKey():
                 self.items.update(self.game_satate)
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.Play:
             # 画面一時停止
-            if pyxel.btnp(pyxel.KEY_P):
+            if self.InputPoseKey():
                 self.game_satate = GamePlay.Pose
                 return
 
@@ -89,7 +89,7 @@ class App:
 
         elif self.game_satate == GamePlay.Pose:
             # ポーズ解除
-            if pyxel.btnp(pyxel.KEY_P):
+            if self.InputPoseKey():
                 self.game_satate = GamePlay.Play
 
         elif self.game_satate == GamePlay.PlayStop:
@@ -102,12 +102,14 @@ class App:
                 self.player.ResetPos()
                 self.items.Reset()
                 self.game_satate = GamePlay.PlayReset
-            if pyxel.btnr(pyxel.KEY_RIGHT):
+            if pyxel.btnr(pyxel.KEY_RIGHT) \
+                    or pyxel.btnr(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT):
                 self.button_release = True
 
         elif self.game_satate == GamePlay.PlayReset:
             # 右キー押しっぱなしだと勢いですぐドアから出るので調整
             if pyxel.btnr(pyxel.KEY_RIGHT) \
+                    or pyxel.btnr(pyxel.GAMEPAD1_BUTTON_DPAD_RIGHT) \
                     or self.button_release:
                 self.items.update(self.game_satate)
                 self.game_satate = GamePlay.Play
@@ -120,7 +122,7 @@ class App:
 
         elif self.game_satate == GamePlay.GameOver:
             # リセットして再開
-            if pyxel.btnp(pyxel.KEY_SPACE):
+            if self.InputMainKey():
                 self.player.ResetPos()
                 self.enemies.Reset()
                 self.items.Reset()
@@ -171,6 +173,18 @@ class App:
             self.EDMovie()
 
         self.DrawScoreBoard()
+
+    def InputMainKey(self):
+        if pyxel.btnp(pyxel.KEY_SPACE) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
+            return True
+        return False
+    
+    def InputPoseKey(self):
+        if pyxel.btnp(pyxel.KEY_P) \
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+            return True
+        return False
 
     def isHit(self, obj: GameObject):
         '''
