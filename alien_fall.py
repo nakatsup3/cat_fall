@@ -176,13 +176,13 @@ class App:
 
     def InputMainKey(self):
         if pyxel.btnp(pyxel.KEY_SPACE) \
-                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
             return True
         return False
     
     def InputPoseKey(self):
         if pyxel.btnp(pyxel.KEY_P) \
-                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_A):
+                or pyxel.btnp(pyxel.GAMEPAD1_BUTTON_B):
             return True
         return False
 
