@@ -36,6 +36,8 @@ class App:
         pyxel.images[1].load(0, 0, 'assets/player.png')
         pyxel.images[2].load(0, 0, 'assets/ufo.png')
         self.fnt_jp_10 = pyxel.Font("assets/umplus_j10r.bdf")
+        self.fuji_img = pyxel.Image(256, 160)
+        self.fuji_img.load(0, 0, 'assets/mtfj.png')
         # 内部
         self.game_satate = GamePlay.Title
         self.player = Player(1)
@@ -133,9 +135,9 @@ class App:
                 self.e_val_a += 1
                 if 60 < self.e_val_a:
                     # ふよふよ
-                    # self.e_val_a = -60
-                    # 対峙
-                    self.e_val_a = 60
+                    self.e_val_a = -60
+                    # # 対峙
+                    # self.e_val_a = 60
 
     def draw(self):
         '''
@@ -144,6 +146,7 @@ class App:
         if self.game_satate != GamePlay.GameOver:
             # ゲームオーバー時以外の共通描画
             pyxel.cls(pyxel.COLOR_LIGHT_BLUE)
+
             self.DrawBackground()
             self.player.draw()
             self.enemies.draw()
@@ -237,6 +240,7 @@ class App:
         '''
         背景描画
         '''
+        pyxel.blt(0, 50, self.fuji_img, 0, 0, 256, 160)
         # 地面 奥行
         pyxel.rect(0, SCORE_BOARD_LINE - CELL_SIZE * 2,
                    pyxel.width, CELL_SIZE * 2, pyxel.COLOR_BROWN)
@@ -328,12 +332,13 @@ class App:
         if self.ed_ptn == 1:
             white = pyxel.COLOR_WHITE
             # ふよふよ
-            # y = self.fuyofuyo()
-            # pyxel.elli(pyxel.width / 2, y, 10, 10, pyxel.COLOR_WHITE)
+            y = self.fuyofuyo()
+            pyxel.elli(pyxel.width / 2, y, 10, 10, pyxel.COLOR_WHITE)
+
             # 対峙
-            x = self.e_val_a / 2
-            pyxel.rect(x, SCORE_BOARD_LINE - 130, 100, 130, white)
-            pyxel.rect(pyxel.width - x - 100, SCORE_BOARD_LINE - 170, 100, 150, white)
+            # x = self.e_val_a / 2
+            # pyxel.rect(x, SCORE_BOARD_LINE - 130, 100, 130, white)
+            # pyxel.rect(pyxel.width - x - 100, SCORE_BOARD_LINE - 170, 100, 150, white)
         elif self.ed_ptn == 2:
             pass
 
